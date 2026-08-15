@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  --background: #faf7f1;
+  --foreground: #2c2a24;
+
+  --color-fern-50: #f2f6f1;
+  --color-fern-100: #dfe9db;
+  --color-fern-200: #bcd3b4;
+  --color-fern-300: #93b586;
+  --color-fern-400: #6c9760;
+  --color-fern-500: #4f7a45;
+  --color-fern-600: #3d6136;
+  --color-fern-700: #324e2d;
+  --color-fern-800: #2a3f26;
+  --color-fern-900: #22331f;
+
+  --color-sand-50: #fefcf8;
+  --color-sand-100: #faf7f1;
+  --color-sand-200: #f2ead9;
+  --color-sand-300: #e6d8bd;
+  --color-sand-400: #d4bd93;
+
+  --color-clay-500: #b3652f;
+  --color-clay-600: #995428;
+
+  --color-ink-900: #22201b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+
+  --color-fern-50: var(--color-fern-50);
+  --color-fern-100: var(--color-fern-100);
+  --color-fern-200: var(--color-fern-200);
+  --color-fern-300: var(--color-fern-300);
+  --color-fern-400: var(--color-fern-400);
+  --color-fern-500: var(--color-fern-500);
+  --color-fern-600: var(--color-fern-600);
+  --color-fern-700: var(--color-fern-700);
+  --color-fern-800: var(--color-fern-800);
+  --color-fern-900: var(--color-fern-900);
+
+  --color-sand-50: var(--color-sand-50);
+  --color-sand-100: var(--color-sand-100);
+  --color-sand-200: var(--color-sand-200);
+  --color-sand-300: var(--color-sand-300);
+  --color-sand-400: var(--color-sand-400);
+
+  --color-clay-500: var(--color-clay-500);
+  --color-clay-600: var(--color-clay-600);
+
+  --color-ink-900: var(--color-ink-900);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+}
+
+.prose-article :where(p) {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  line-height: 1.75;
+}
+
+.prose-article :where(h2) {
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  font-size: 1.5rem;
+}
