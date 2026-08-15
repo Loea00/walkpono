@@ -60,28 +60,37 @@ export async function POST(request: Request) {
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-  const checkoutSession = await stripe.checkout.sessions.create({
-    mode: "payment",
-    line_items: [
-      {
-        quantity: 1,
-        price_data: {
-          currency: "usd",
-          unit_amount: workshop.priceCents,
-          product_data: { name: workshop.title },
+  try {
+    const checkoutSession = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: [
+        {
+          quantity: 1,
+          price_data: {
+            currency: "usd",
+            unit_amount: workshop.priceCents,
+            product_data: { name: workshop.title },
+          },
         },
-      },
-    ],
-    success_url: `${siteUrl}/account?registration=success`,
-    cancel_url: `${siteUrl}/workshops/${workshop.slug}`,
-    customer_email: session.user.email ?? undefined,
-    metadata: { registrationId: registration.id },
-  });
+      ],
+      success_url: `${siteUrl}/account?registration=success`,
+      cancel_url: `${siteUrl}/workshops/${workshop.slug}`,
+      customer_email: session.user.email ?? undefined,
+      metadata: { registrationId: registration.id },
+    });
 
-  await prisma.registration.update({
-    where: { id: registration.id },
-    data: { stripeSessionId: checkoutSession.id },
-  });
+    await prisma.registration.update({
+      where: { id: registration.id },
+      data: { stripeSessionId: checkoutSession.id },
+    });
 
-  return NextResponse.json({ ok: true, url: checkoutSession.url });
+    return NextResponse.json({ ok: true, url: checkoutSession.url });
+  } catch (err) {
+    console.error("Registration checkout failed:", err);
+    await prisma.registration.delete({ where: { id: registration.id } });
+    return NextResponse.json(
+      { error: "Something went wrong starting checkout. Please try again." },
+      { status: 500 }
+    );
+  }
 }
